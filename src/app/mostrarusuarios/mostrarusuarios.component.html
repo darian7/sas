@@ -1,0 +1,32 @@
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+  <h1 class="display-4">USUARIOS</h1>
+  <p class="lead">lista de usuarios registrados.</p>
+</div>
+
+<div>
+
+  <hr>
+  <div class="row ">
+
+    <div *ngFor="let Usuarios of usuarios" class="col-md-4 text-center text-white">
+
+      <br>
+      <div class=" bg-primary" [ngClass]="{'bg-warning d-done':Usuarios.estado==0}">
+        
+        <br>
+        <span *ngIf="Usuarios.estado; else falso" class="fas fa-user-check" style="font-size:100px"></span>
+        <ng-template #falso> <span class="fas fa-user-times" style="font-size:100px"></span> </ng-template>
+        <br>
+        <label>{{Usuarios.nombre}}</label>
+        <br>
+        <label>Correo: {{Usuarios.correo}}</label>
+        <br>
+        <label>Comentario:</label>
+        <br>
+        <label>{{Usuarios.comentario}}</label>
+      </div>
+    </div>
+
+  </div>
+  <hr>
+</div>

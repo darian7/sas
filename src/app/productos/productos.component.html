@@ -1,0 +1,59 @@
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+  <h1 class="display-4">PRODUCTOS</h1>
+  <p class="lead">selecione la forma de busqueda de los productos que se encuentran el inventario actualmente.</p>
+</div>
+
+<div>
+
+  <div class="row justify-content-center">
+
+    <div class="col-md-6 form-group">
+      <input [(ngModel)]="porNombre.valor1" class="form-control mr-sm-2" type="search" placeholder="" name="una"
+        (keyup)="ngOnInit()">
+      <br>
+
+    </div>
+
+
+
+  </div>
+
+  <hr>
+
+  <div *ngIf="Mostrar" class="row">
+
+    <div *ngFor="let Productos of productos" class="col-md-4 text-center">
+
+      <img src="{{Productos.imagen}}" width="200" height="200" class="mx-auto d-block">
+      <br>
+      <label>{{Productos.nombre}}</label>
+      <br>
+      <label>Referencia: {{Productos.referencia}}</label>
+      <br>
+      <label>Exitencia: {{Productos.existencia}}</label>
+
+    </div>
+
+  </div>
+
+  <div *ngIf="Mostrar2" class="row">
+
+    <div *ngFor="let ProductosTotal of productosTotal | search : porNombre.valor1" class="col-md-4 text-center">
+
+      <img src="{{ProductosTotal.imagen}}" width="200" height="200" class="mx-auto d-block">
+      <br>
+      <label>{{ProductosTotal.nombre}}</label>
+      <br>
+      <label>Referencia: {{ProductosTotal.referencia}}</label>
+      <br>
+      <label>Exitencia: {{ProductosTotal.existencia}}</label>
+
+    </div>
+
+  </div>
+
+
+  <hr>
+
+
+</div>
