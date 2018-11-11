@@ -18,6 +18,7 @@ import { InsertarproductosComponent } from './insertarproductos/insertarproducto
 import { FormsModule } from '@angular/forms';
 import { MostrarusuariosComponent } from './mostrarusuarios/mostrarusuarios.component';
 import { SearchPipe } from './search.pipe';
+import { ProductosenpedidoComponent } from './productosenpedido/productosenpedido.component';
 
 const routes: Routes = [
   { path: 'mostrarusuarios', component: MostrarusuariosComponent },
@@ -48,6 +49,7 @@ const routes: Routes = [
     InsertarproductosComponent,
     MostrarusuariosComponent,
     SearchPipe,
+    ProductosenpedidoComponent,
   ],
   imports: [
     BrowserModule,

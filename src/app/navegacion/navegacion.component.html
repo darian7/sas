@@ -1,15 +1,33 @@
+<h5 class="my-0 mr-md-auto font-weight-normal">Bienvenidos</h5>
+<br>
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #a8e9e6;">
 
-    <div  style="background-color: aquamarine" class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm" >
-        <h5 class="my-0 mr-md-auto font-weight-normal">Bienvenidos</h5>
-        <nav class="my-2 my-md-0 mr-md-3 navbar navbar-light">
-            <a class="p-2 text-dark" [routerLink]="['/home']">[ Inicio ]</a>
-            <a class="p-2 text-dark" [routerLink]="['/pedidos']">[ Pedidos ]</a>
-            <a class="p-2 text-dark" [routerLink]="['/facturas']">[ Facturas ]</a>
-            <a class="p-2 text-dark" [routerLink]="['/productos']">[ Productos ]</a>
-            <a class="p-2 text-dark" [routerLink]="['/mostrarusuarios']">[ Usuarios ]</a>
-            <a class="p-2 text-dark" [routerLink]="['/insertarproductos']">[ Insertar Productos ]</a>
-            <a class="p-2 text-dark" [routerLink]="['/crearusuarios']">[ Crear Usuarios ]</a>
-        </nav>
-        
-        <a  class="btn btn-outline-primary" href="http://localhost:4200/"  style="background-color: aquamarine">Sign up</a>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" routerLinkActive="ative" [routerLink]="['/home']">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLinkActive="ative" [routerLink]="['/pedidos']">Pedidos</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLinkActive="ative" [routerLink]="['/facturas']">Facturas</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLinkActive="ative" [routerLink]="['/productos']">Productos</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLinkActive="ative" [routerLink]="['/mostrarusuarios']">Usuarios</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLinkActive="ative" [routerLink]="['/insertarproductos']">Insertar Productos</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLinkActive="ative" [routerLink]="['/crearusuarios']">Crear Usuarios</a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <a href="http://localhost:4200/" class="btn btn-outline-primary my-2 my-sm-0" style="background-color: aquamarine" type="submit">Sign Up</a>
+        </form>
     </div>
+</nav>

@@ -10,11 +10,22 @@
     <div class="col-md-6 form-group">
       <input [(ngModel)]="porNombre.valor1" class="form-control mr-sm-2" type="search" placeholder="" name="una"
         (keyup)="ngOnInit()">
-      <br>
+    </div>
+
+    <div class="col-md-3">
 
     </div>
 
-
+    <div class="col-md-3">
+      <label class="Display-5 text-center"> Activar Pedido</label>
+      <div class="onoffswitch">
+        <input  type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" value="onf">
+        <label class="onoffswitch-label" for="myonoffswitch">
+          <span class="onoffswitch-inner"></span>
+          <span class="onoffswitch-switch"></span>
+        </label>
+      </div>
+    </div>
 
   </div>
 
@@ -24,23 +35,34 @@
 
     <div *ngFor="let Productos of productos" class="col-md-4 text-center">
 
-      <img src="{{Productos.imagen}}" width="200" height="200" class="mx-auto d-block">
+      <img (mouseover)="Pedido(Productos.idProducto)" (mouseout)="Pedido(Productos.idProducto)" data-toggle="modal"
+        data-target="#ventanaproducto" style="cursor: pointer" src="{{Productos.imagen}}" width="200" height="200"
+        class="mx-auto d-block">
+      <br>
+      <label>{{Productos.idProducto}} gg</label>
       <br>
       <label>{{Productos.nombre}}</label>
       <br>
       <label>Referencia: {{Productos.referencia}}</label>
       <br>
       <label>Exitencia: {{Productos.existencia}}</label>
+      <br>
 
     </div>
 
   </div>
 
+
+
   <div *ngIf="Mostrar2" class="row">
 
     <div *ngFor="let ProductosTotal of productosTotal | search : porNombre.valor1" class="col-md-4 text-center">
 
-      <img src="{{ProductosTotal.imagen}}" width="200" height="200" class="mx-auto d-block">
+      <img (mouseover)="Pedido(ProductosTotal.idProducto)" (mouseout)="Pedido(ProductosTotal.idProducto)" data-toggle="modal"
+        data-target="#ventanaproducto" style="cursor: pointer" src="{{ProductosTotal.imagen}}" width="200" height="200"
+        class="mx-auto d-block">
+      <br>
+      <label>{{ProductosTotal.idProducto}} gg</label>
       <br>
       <label>{{ProductosTotal.nombre}}</label>
       <br>
@@ -51,6 +73,66 @@
     </div>
 
   </div>
+
+
+
+  <div *ngIf="pedidoactivo" class=" modal fade " id="ventanaproducto" tabindex="-1" role="dialog" aria-labelledby="tituloventana" aria-hidden="true">
+
+    <div class="modal-dialog border border-info" role="document">
+
+      <div class="modal-content container">
+
+        <div class="modal-header">
+
+          <h1 id="tituloventana">Añadir al carrito</h1>
+          <button class="close" data-dismiss="modal" aria-label="Cerrar">
+            <span aria-hidden="true">&times;</span>
+          </button>
+
+        </div>
+
+        <div class="modal-body">
+
+          <div class="alert alert-success text-center">
+            {{productoreal.nombre}}
+          </div>
+
+          <div class="row justify-content-center">
+            <br>
+            <img src="{{productoreal.imagen}}" width="200" height="200" class="mx-auto d-block">
+            <br>
+          </div>
+          <br>
+          <div class="container">
+            <div class="row justify-content-center">
+              <div class="col-md-4">
+                <i class="fas fa-cart-arrow-down" style="font-size:70px ; cursor: pointer"></i>
+              </div>
+              <div class="col-md-4">
+                <label class="display-2 text-right" for="">{{productoreal.existencia}}</label>
+              </div>
+              <div class="col-md-4">
+                <i class="fas fa-cart-plus" style="font-size:70px ; cursor: pointer"></i>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn btn-warning" type="button" data-dismiss="modal">
+            cerrar
+          </button>
+          <button class="btn btn-warning" type="button">
+            aseptar
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
 
 
   <hr>

@@ -12,6 +12,7 @@ export class AuthService {
   private _ValidarUsuarioUrl = "http://40.121.134.227:3000/users/signin"
   private _MostrarproductosUrl = "http://40.121.134.227:3000/products/products_cache"
   private _MostrarproductosTolalUrl = "http://40.121.134.227:3000/products/queryProduct/"
+  private _MostrarproductoUrl= "http://40.121.134.227:3000/products/getOne/";
   private _MostrarusuariosUrl = "http://40.121.134.227:3000/users/All"
   private _CrearUsuarioUrl = "http://40.121.134.227:3000/users/create"
   private _CrearPersonaUrl =  "http://40.121.134.227:3000/persons/create"
@@ -80,6 +81,8 @@ export class AuthService {
   }
 
   ListarProducto(idproducto) {
+
+return fetch(this._MostrarproductoUrl+idproducto)
 
   }
 

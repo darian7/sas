@@ -11,14 +11,21 @@ export class ProductosComponent implements OnInit {
   constructor(private productosService: AuthService) { }
 
   productos = [];
+  
   productosTotal = [];
+  
   porNombre = {
     valor1: "",
     valor2: ""
   };
+  
   Mostrar = true;
   Mostrar2 = false;
-  i = 1;
+
+  producto = [];
+  productoreal = {};
+
+  pedidoactivo = false;
 
 
   ngOnInit() {
@@ -29,7 +36,7 @@ export class ProductosComponent implements OnInit {
       this.MostrarProductos();
 
     } else {
-     
+
       this.Mostrar = false;
       this.Mostrar2 = true
       this.MostrarTotalProductos();
@@ -38,11 +45,11 @@ export class ProductosComponent implements OnInit {
   }
 
   MostrarTotalProductos() {
-    
-    
-      this.productosService.ListarProductosTotal(this.porNombre.valor1).then(response => response.json())
-      .then(json => this.productosTotal = json) 
-      
+
+
+    this.productosService.ListarProductosTotal(this.porNombre.valor1).then(response => response.json())
+      .then(json => this.productosTotal = json)
+
 
   }
 
@@ -51,4 +58,25 @@ export class ProductosComponent implements OnInit {
       .then(json => this.productos = json)
   }
 
+  Pedido(idproducto) {
+
+    console.log("activado"+idproducto)
+
+    var cars= <HTMLInputElement>document.getElementById('myonoffswitch');
+    this.pedidoactivo=cars.checked;
+
+    this.productosService.ListarProducto(idproducto).then(response => response.json()).
+      then(json => this.producto = json)
+
+    for (let index = 0; index < this.producto.length; index++) {
+      this.productoreal = this.producto[index];
+    }
+
+
+  }
+
+
+  Validarpedido() {
+    console.log("pedido activo")
+  }
 }
