@@ -1,10 +1,5 @@
-export class datosproducto {
+export interface datosproducto {
 
-    constructor (imagen:String) {
-        let Imagen=imagen;
-    }
-
-    
-
+    nombre: String; 
     
 }

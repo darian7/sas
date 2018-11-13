@@ -56,7 +56,7 @@
 
   <div *ngIf="Mostrar2" class="row">
 
-    <div *ngFor="let ProductosTotal of productosTotal | search : porNombre.valor1" class="col-md-4 text-center">
+    <div *ngFor="let ProductosTotal of (productosTotal | search : porNombre.valor1)" class="col-md-4 text-center">
 
       <img (mouseover)="Pedido(ProductosTotal.idProducto)" (mouseout)="Pedido(ProductosTotal.idProducto)" data-toggle="modal"
         data-target="#ventanaproducto" style="cursor: pointer" src="{{ProductosTotal.imagen}}" width="200" height="200"

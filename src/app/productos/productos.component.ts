@@ -15,8 +15,7 @@ export class ProductosComponent implements OnInit {
   productosTotal = [];
   
   porNombre = {
-    valor1: "",
-    valor2: ""
+    valor1: ""
   };
   
   Mostrar = true;
@@ -30,7 +29,8 @@ export class ProductosComponent implements OnInit {
 
   ngOnInit() {
 
-    if (this.porNombre.valor1 == "" && this.porNombre.valor2 == "") {
+    if (this.porNombre.valor1 == "" ) {
+     
       this.Mostrar = true;
       this.Mostrar2 = false;
       this.MostrarProductos();
