@@ -19,9 +19,7 @@ export class CrearusuariosComponent implements OnInit {
     identificacion:null,
     genero:null,
     nacimiento:"",
-    
-
-
+  
   }
 
   constructor(private CrearUsuariosService: AuthService) { }

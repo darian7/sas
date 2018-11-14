@@ -6,9 +6,12 @@
 <div>
 
   <hr>
+  <div>
+    <input [(ngModel)]="buscador" name="buscar" type="search">
+  </div>
   <div class="row ">
 
-    <div *ngFor="let Usuarios of usuarios" class="col-md-4 text-center text-white">
+    <div *ngFor="let Usuarios of (usuarios | filtrousuarios : buscador)" class="col-md-4 text-center text-white">
 
       <br>
       <div class=" bg-primary" [ngClass]="{'bg-warning d-done':Usuarios.estado==0}">

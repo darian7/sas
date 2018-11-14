@@ -18,7 +18,6 @@ export class InsertarproductosComponent implements OnInit {
     descuento:null,
     detalle:"",
     imagen:"",
-
   }
 
   constructor(private CrearproductoService: AuthService ) { }
@@ -27,8 +26,6 @@ export class InsertarproductosComponent implements OnInit {
   }
 
   CrearProductos() {
-
-    
 
     this.CrearproductoService.CrearProductos(this.producto)
 

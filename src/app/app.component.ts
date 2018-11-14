@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
   Nocultar: boolean = true;
   usuario: boolean = false;
   registerUserData = {}
-  validacion = [];
+  
 
 
   constructor(private Auth: AuthService) {
@@ -26,12 +26,10 @@ export class AppComponent implements OnInit {
   loginUser() {
     this.Auth.ValidarUsuario(this.registerUserData).then(response => response.json())
       .then(json => {
-        this.validacion = json
-        for (let index = 0; index < this.validacion.length; index++) {
-          if (this.validacion[index].data == 3) {
-            this.Nocultar = false;
-            this.usuario = true;
-          }
+        var validacion = json
+        if (validacion[0].data != -1) {
+          this.Nocultar = false;
+          this.usuario = true;
         }
       })
   }

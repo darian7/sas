@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { urlBase } from './activos/confi';
 
 @Injectable({
   providedIn: 'root'
@@ -7,26 +8,12 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 export class AuthService {
 
-
-
-  private _ValidarUsuarioUrl = "http://40.121.134.227:3000/users/signin"
-  private _MostrarproductosUrl = "http://40.121.134.227:3000/products/products_cache"
-  private _MostrarproductosTolalUrl = "http://40.121.134.227:3000/products/queryProduct/"
-  private _MostrarproductoUrl= "http://40.121.134.227:3000/products/getOne/";
-  private _MostrarusuariosUrl = "http://40.121.134.227:3000/users/All"
-  private _CrearUsuarioUrl = "http://40.121.134.227:3000/users/create"
-  private _CrearPersonaUrl =  "http://40.121.134.227:3000/persons/create"
-  private _CrearProductoUrl = "http://40.121.134.227:3000/products/create"
-
-
-  constructor(public http: HttpClient) {
+  constructor(public http: HttpClient, public urlbase: urlBase) {
   }
-
 
   ValidarUsuario(user) {
 
-    
-    return fetch(this._ValidarUsuarioUrl, {
+    return fetch(this.urlbase.geturl() + "users/signin", {
       method: 'POST',
       body: 'correo=' + user.correo + '&&contrasena=' + user.contrasena,
       headers: {
@@ -34,13 +21,11 @@ export class AuthService {
       }
     })
 
-
-
   }
 
   CrearUsuarios(userdatos) {
 
-    fetch(this._CrearPersonaUrl, {
+    fetch(this.urlbase.geturl()+"persons/create", {
       method: 'POST',
       body: 'nombre=' + userdatos.nombre + '&&apellido=' + userdatos.apellido + '&&genero=' + userdatos.genero + '&&fe_naci=' + userdatos.nacimiento + '&&identifi=' +
         userdatos.identificacion + '&&estado=1',
@@ -49,7 +34,7 @@ export class AuthService {
       }
     })
 
-    fetch(this._CrearUsuarioUrl, {
+    fetch(this.urlbase.geturl()+"users/create", {
       method: 'POST',
       body: 'nombre=' + userdatos.nombre + ' ' + userdatos.apellido + '&&contrasena=' + userdatos.contrasena + '&&correo=' + userdatos.correo + '&&comentario=' +
         userdatos.comentario + '&&experiencia=' + userdatos.experiencia + '&&estado=1&&fkPersona=1',
@@ -62,17 +47,17 @@ export class AuthService {
   }
 
   MostrarUsuarios() {
-    return fetch(this._MostrarusuariosUrl)
+    return fetch(this.urlbase.geturl()+"users/All")
   }
 
   CrearProductos(producto) {
 
-    fetch(this._CrearProductoUrl, {
+    fetch(this.urlbase.geturl()+"products/create", {
       method: 'POST',
-      body: 'nombre='+producto.nombre+'&&referencia='+producto.referencia+'&&iva='+producto.iva+'&&existencia='+producto.existencia+
-      '&&comentario='+producto.comentario+'&&fkMarca=285&&fkLote=2&&imagen='+producto.imagen+
-      '&&rotacion=2&&minimo=2&&maximo=2&&valor='
-      +producto.precio+'&&descuento='+producto.descuento+'&&detalle='+producto.detalle,
+      body: 'nombre=' + producto.nombre + '&&referencia=' + producto.referencia + '&&iva=' + producto.iva + '&&existencia=' + producto.existencia +
+        '&&comentario=' + producto.comentario + '&&fkMarca=285&&fkLote=2&&imagen=' + producto.imagen +
+        '&&rotacion=2&&minimo=2&&maximo=2&&valor='
+        + producto.precio + '&&descuento=' + producto.descuento + '&&detalle=' + producto.detalle,
       headers: {
         "Content-type": "application/x-www-form-urlencoded"
       }
@@ -82,16 +67,16 @@ export class AuthService {
 
   ListarProducto(idproducto) {
 
-return fetch(this._MostrarproductoUrl+idproducto)
+    return fetch(this.urlbase.geturl()+"products/getOne/"+ idproducto)
 
   }
 
   ListarProductos() {
-    return fetch(this._MostrarproductosUrl)
+    return fetch(this.urlbase.geturl()+"products/products_cache")
   }
 
-  ListarProductosTotal(consulta:String) {
-    return fetch(this._MostrarproductosTolalUrl+consulta)
+  ListarProductosTotal(consulta: String) {
+    return fetch(this.urlbase.geturl()+"products/queryProduct/" + consulta)
   }
 
   ListarPedidos() {

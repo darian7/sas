@@ -11,7 +11,8 @@ export class MostrarusuariosComponent implements OnInit {
   constructor(private UsuariosService: AuthService) { }
 
   usuarios = [];
-  pintar = [];
+  buscador = "";
+  
 
   ngOnInit() {
     this.MostrarUsuarios();
@@ -19,13 +20,9 @@ export class MostrarusuariosComponent implements OnInit {
 
   MostrarUsuarios() {
 
-   
-
     this.UsuariosService.MostrarUsuarios().then(response => response.json())
       .then(json => this.usuarios = json )
       
-
-
   }
 
 }

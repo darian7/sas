@@ -19,6 +19,9 @@ import { FormsModule } from '@angular/forms';
 import { MostrarusuariosComponent } from './mostrarusuarios/mostrarusuarios.component';
 import { SearchPipe } from './search.pipe';
 import { ProductosenpedidoComponent } from './productosenpedido/productosenpedido.component';
+import { urlBase} from './activos/confi';
+import { FiltrousuariosPipe } from './tuberias/filtrousuarios.pipe'
+
 
 const routes: Routes = [
   { path: 'mostrarusuarios', component: MostrarusuariosComponent },
@@ -50,6 +53,8 @@ const routes: Routes = [
     MostrarusuariosComponent,
     SearchPipe,
     ProductosenpedidoComponent,
+    FiltrousuariosPipe,
+    
   ],
   imports: [
     BrowserModule,
@@ -58,7 +63,7 @@ const routes: Routes = [
     HttpClientModule,
     
   ],
-  providers: [AuthService],
+  providers: [AuthService,urlBase,],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
