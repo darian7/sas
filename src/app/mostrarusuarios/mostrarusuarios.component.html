@@ -6,16 +6,23 @@
 <div>
 
   <hr>
-  <div>
-    <input [(ngModel)]="buscador" name="buscar" type="search">
+
+  <div class="row justify-content-center">
+    <div class="col-md-2"><span class="label label-danger">Buscar Usuario</span></div>
+    <div class="col-md-6">
+      <input [(ngModel)]="buscador" name="buscar" class="form-control mr-sm-2"
+        type="search">
+    </div>
+
   </div>
+
   <div class="row ">
 
     <div *ngFor="let Usuarios of (usuarios | filtrousuarios : buscador)" class="col-md-4 text-center text-white">
 
       <br>
       <div class=" bg-primary" [ngClass]="{'bg-warning d-done':Usuarios.estado==0}">
-        
+
         <br>
         <span *ngIf="Usuarios.estado; else falso" class="fas fa-user-check" style="font-size:100px"></span>
         <ng-template #falso> <span class="fas fa-user-times" style="font-size:100px"></span> </ng-template>

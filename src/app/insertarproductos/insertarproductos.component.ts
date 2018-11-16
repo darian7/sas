@@ -26,6 +26,19 @@ export class InsertarproductosComponent implements OnInit {
   }
 
   CrearProductos() {
+    if (this.producto.imagen=="") {
+      this.producto.imagen="http://www.cristaldelponiente.com/administrador/vistas/img/productos/default/anonymous.png";
+    }if (this.producto.comentario=="") {
+      this.producto.comentario="nulo";
+    }if (this.producto.descuento==null) {
+      this.producto.descuento=0;
+    }if (this.producto.detalle=="") {
+      this.producto.detalle="nulo";
+    }if (this.producto.existencia==null) {
+      this.producto.existencia=0;
+    }if (this.producto.iva==null) {
+      this.producto.iva=0;
+    }
 
     this.CrearproductoService.CrearProductos(this.producto)
 
