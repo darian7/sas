@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { HolaMundoComponent } from './hola-mundo/hola-mundo.component';
-import { UserComponent } from './user/user.component';
 import { CabeceraComponent } from './cabecera/cabecera.component';
 import { NavegacionComponent } from './navegacion/navegacion.component';
 import { PedidosComponent } from './pedidos/pedidos.component';
@@ -40,7 +39,6 @@ const routes: Routes = [
   declarations: [
     AppComponent,
     HolaMundoComponent,
-    UserComponent,
     CabeceraComponent,
     NavegacionComponent,
     PedidosComponent,

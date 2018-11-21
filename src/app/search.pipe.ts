@@ -15,9 +15,9 @@ export class SearchPipe implements PipeTransform {
 
         let json = [];
 
-        value[0] ?
+        value ?
 
-            value[0].filter(pro => pro.nombre.toUpperCase().indexOf(search.toUpperCase()) > -1 ? json.push(pro) : '')
+            value.filter(pro => pro.nombre.toUpperCase().indexOf(search.toUpperCase()) > -1 ? json.push(pro) : '')
 
             : ''
 

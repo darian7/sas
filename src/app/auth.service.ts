@@ -42,8 +42,6 @@ export class AuthService {
         "Content-type": "application/x-www-form-urlencoded"
       }
     })
-
-
   }
 
   MostrarUsuarios() {

@@ -8,7 +8,17 @@ import { AuthService } from 'src/app/auth.service';
 })
 export class InsertarproductosComponent implements OnInit {
 
-  producto = {
+  producto :{
+    nombre:String,
+    referencia:String,
+    comentario:String,
+    precio:Number,
+    existencia:Number,
+    iva:Number,
+    descuento:Number,
+    detalle:String,
+    imagen:String
+  } = {
     nombre :"",
     referencia: "",
     comentario:"",

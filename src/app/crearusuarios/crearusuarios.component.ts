@@ -10,19 +10,27 @@ import { isNullOrUndefined } from 'util';
 })
 export class CrearusuariosComponent implements OnInit {
 
-  UserDatos = {
-
+  UserDatos: { 
+    nombre: String, 
+    apellido: String, 
+    correo: String, 
+    contrasena: String, 
+    experiencia: Number, 
+    comentario: String, 
+    identificacion: String, 
+    genero: Number, 
+    nacimiento: String 
+    } = {
     nombre: "",
     apellido: "",
     correo: "",
     contrasena: "",
     experiencia: null,
     comentario: "",
-    identificacion: null,
+    identificacion: "",
     genero: null,
-    nacimiento: "",
-
-  }
+    nacimiento: ""
+  };
 
   constructor(private CrearUsuariosService: AuthService) { }
 
