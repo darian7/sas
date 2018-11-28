@@ -40,7 +40,7 @@ export class ProductosComponent implements OnInit {
 
   Mostrar = true;
   Mostrar2 = false;
-  
+
   producto: {
     idProducto: Number,
     nombre: String,
@@ -70,7 +70,7 @@ export class ProductosComponent implements OnInit {
       minimo: 0,
       maximo: 0
     };
-    
+
   pedidoactivo = false;
 
 
@@ -107,7 +107,18 @@ export class ProductosComponent implements OnInit {
   }
 
 
-  Validarpedido() {
-    console.log("pedido activo")
+  Validarpedido(cantidad) {
+    console.log("pedido solicitado con " + cantidad + " de producto: " + this.producto.nombre)
+
+  }
+
+  CerrarPedido(activado) {
+    
+    if (activado) {
+      console.log("se abrio el pedido")  
+    } else {
+      console.log("se cerro el pedido")
+    }
+    
   }
 }
