@@ -5,15 +5,24 @@
 
 <div>
 
-  <div class="row justify-content-center">
+  <div class="row">
 
     <div class="col-md-6 form-group">
+      <label class="Display-5 text-center">Buscar</label>
       <input [(ngModel)]="porNombre.valor1" class="form-control mr-sm-2" type="search" placeholder="" name="una"
         (keyup)="ngOnInit()">
     </div>
 
-    <div class="col-md-3">
-
+    <div *ngIf="pedidoactivo" class="col-md-3">
+      <form class="form-inline">
+        <div class="select-group">
+          <label class="Display-5 text-center">Tipo de pago</label>
+          <select [(ngModel)]="factura.tipo" name="seleccion" class="custom-select my-1 mr-sm-2" #tipo>
+            <option selected value="CONTADO">Contado</option>
+            <option value="CREDITO">Credito</option>
+          </select>
+        </div>
+      </form>
     </div>
 
     <div class="col-md-3">
@@ -32,48 +41,78 @@
 
   <hr>
 
-  <div *ngIf="Mostrar" class="row">
+  <div class="row">
 
-    <div *ngFor="let Productos of productos" class="col-md-4 text-center">
+    <div class="col-md-3 border">
 
-      <img (mouseover)="Pedido(Productos.idProducto)" (mouseout)="Pedido(Productos.idProducto)" data-toggle="modal"
-        data-target="#ventanaproducto" style="cursor: pointer" src="{{Productos.imagen}}" width="200" height="200"
-        class="mx-auto d-block">
-      <br>
-      <label>{{Productos.idProducto}} gg</label>
-      <br>
-      <label>{{Productos.nombre}}</label>
-      <br>
-      <label>Referencia: {{Productos.referencia}}</label>
-      <br>
-      <label>Exitencia: {{Productos.existencia}}</label>
-      <br>
+      <div *ngFor="let productospedidos of ProductosPedido; index as i" class="col-md-12">
+
+        <label for="">Producto: {{productospedidos.nombre}}</label>
+        <br>
+        <label for="">cantidad: {{productospedidos.cantidad}}</label> 
+        <br>
+        <span (click)="EliminarProductoPedido(i)"><i class="fas fa-trash-alt" style="font-size:30px; cursor: pointer"></i></span>
+        <hr>
+
+      </div>
+
+
+    </div>
+
+
+    <div class="col-md-9">
+
+      <div *ngIf="Mostrar" class="row">
+
+
+        <div *ngFor="let Productos of productos" class="col-md-3 text-center">
+
+          <img (mouseover)="Pedido(Productos.idProducto)" (mouseout)="Pedido(Productos.idProducto)" data-toggle="modal"
+            data-target="#ventanaproducto" style="cursor: pointer" src="{{Productos.imagen}}" width="150" height="150"
+            class="mx-auto d-block">
+          <br>
+          <label>{{Productos.idProducto}} gg</label>
+          <br>
+          <label>{{Productos.nombre}}</label>
+          <br>
+          <label>Referencia: {{Productos.referencia}}</label>
+          <br>
+          <label>Exitencia: {{Productos.existencia}}</label>
+          <br>
+
+        </div>
+
+      </div>
+
+
+
+      <div *ngIf="Mostrar2" class="row">
+
+        <div *ngFor="let ProductosTotal of (productosTotal | search : porNombre.valor1)" class="col-md-3 text-center">
+
+          <img (mouseover)="Pedido(ProductosTotal.idProducto)" (mouseout)="Pedido(ProductosTotal.idProducto)"
+            data-toggle="modal" data-target="#ventanaproducto" style="cursor: pointer" src="{{ProductosTotal.imagen}}"
+            width="150" height="150" class="mx-auto d-block">
+          <br>
+          <label>{{ProductosTotal.idProducto}} gg</label>
+          <br>
+          <label>{{ProductosTotal.nombre}}</label>
+          <br>
+          <label>Referencia: {{ProductosTotal.referencia}}</label>
+          <br>
+          <label>Exitencia: {{ProductosTotal.existencia}}</label>
+
+        </div>
+
+      </div>
+
+
+
 
     </div>
 
   </div>
 
-
-
-  <div *ngIf="Mostrar2" class="row">
-
-    <div *ngFor="let ProductosTotal of (productosTotal | search : porNombre.valor1)" class="col-md-4 text-center">
-
-      <img (mouseover)="Pedido(ProductosTotal.idProducto)" (mouseout)="Pedido(ProductosTotal.idProducto)" data-toggle="modal"
-        data-target="#ventanaproducto" style="cursor: pointer" src="{{ProductosTotal.imagen}}" width="200" height="200"
-        class="mx-auto d-block">
-      <br>
-      <label>{{ProductosTotal.idProducto}} gg</label>
-      <br>
-      <label>{{ProductosTotal.nombre}}</label>
-      <br>
-      <label>Referencia: {{ProductosTotal.referencia}}</label>
-      <br>
-      <label>Exitencia: {{ProductosTotal.existencia}}</label>
-
-    </div>
-
-  </div>
 
 
 

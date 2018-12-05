@@ -20,7 +20,6 @@ export class AuthService {
         "Content-type": "application/x-www-form-urlencoded"
       }
     })
-
   }
 
   CrearUsuarios(userdatos) {
@@ -49,7 +48,6 @@ export class AuthService {
   }
 
   CrearProductos(producto) {
-
     fetch(this.urlbase.geturl() + "products/create", {
       method: 'POST',
       body: 'nombre=' + producto.nombre + '&&referencia=' + producto.referencia + '&&iva=' + producto.iva +
@@ -61,7 +59,6 @@ export class AuthService {
         "Content-type": "application/x-www-form-urlencoded"
       }
     })
-
   }
 
   ListarProducto(idproducto) {
@@ -77,11 +74,53 @@ export class AuthService {
   ListarProductosTotal(consulta: String) {
     return fetch(this.urlbase.geturl() + "products/queryProduct/" + consulta)
   }
-
   ListarPedidos() {
-
   }
 
+  CrearFactura(factura) {
+    return fetch(this.urlbase.geturl() + "factura/create", {
+      method: 'POST',
+      body: 'tipo=' + factura.tipo + '&&val_recibido=' + factura.val_recibido + '&&descuento=' + factura.descuento +
+        '&&fk_usuario=' + factura.fk_usuario,
+      headers: {
+        "Content-type": "application/x-www-form-urlencoded"
+      }
+    })
+  }
+
+
+  CrearPedido(pedido) {
+    return fetch(this.urlbase.geturl() + "pedido/create", {
+      method: 'POST',
+      body: 'fkFactura=' + pedido.fkFactura + '&&fkCliente=' + pedido.fkCliente,
+      headers: {
+        "Content-type": "application/x-www-form-urlencoded"
+      }
+    })
+  }
+
+  AñadirProductos(producto) {
+    console.log("dentro añadir productos")
+    return fetch(this.urlbase.geturl() + "pedido/AddProductToPedido", {
+      method: 'POST',
+      body: 'fkProducto=' + producto.fkProducto + '&&fkPedido=' + producto.fkPedido + '&&cantidad=' + producto.cantidad,
+      headers: {
+        "Content-type": "application/x-www-form-urlencoded"
+      }
+    })
+  }
+
+  CambiarEstae(idPedido) {
+
+    return fetch(this.urlbase.geturl() + "pedido/ChangeStatePedido", {
+      method: 'PUT',
+      body: 'idPedido=' + idPedido + '&&state=FIN',
+      headers: {
+        "Content-type": "application/x-www-form-urlencoded"
+      }
+    })
+
+  }
 
 
 

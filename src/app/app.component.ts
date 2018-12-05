@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { AuthService } from './auth.service';
 
 
@@ -13,24 +13,46 @@ export class AppComponent implements OnInit {
   Nocultar: boolean = true;
   usuario: boolean = false;
   registerUserData = {}
-  
+  data: Number
+
 
 
   constructor(private Auth: AuthService) {
 
   }
 
-  ngOnInit(): void {
+  //@Output() dataUser = new EventEmitter
+
+  ngOnInit() {
+
+    if (localStorage.getItem('id_usuario')) {
+
+      this.Nocultar = !JSON.parse(localStorage.getItem('id_usuario'));
+      this.usuario = JSON.parse(localStorage.getItem('id_usuario'));
+
+    } else {
+      this.Nocultar = true;
+      this.usuario = false;
+
+    }
   }
 
   loginUser() {
     this.Auth.ValidarUsuario(this.registerUserData).then(response => response.json())
       .then(json => {
-        var validacion = json
-        if (validacion[0].data != -1) {
-          this.Nocultar = false;
-          this.usuario = true;
+
+        if (json[0].data != -1) {
+          this.data = json[0].data;
+
+          localStorage.setItem('id_usuario', JSON.stringify(this.data))
+          localStorage.setItem('logeado', JSON.stringify(true))
+
+          this.Nocultar = !JSON.parse(localStorage.getItem('id_usuario'));
+          this.usuario = JSON.parse(localStorage.getItem('id_usuario'));
+
+
         }
+
       })
   }
 }
