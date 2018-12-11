@@ -88,13 +88,15 @@ export class ProductosComponent implements OnInit {
 
   ProductosPedido: Array<{ idProducto: Number, nombre: String, cantidad: String }> = [];
 
-  ngOnInit() {
+  //Id el pedido que se encuentra en marcha
 
+  idPedido: Number = null;
+
+  ngOnInit() {
     var local = localStorage.getItem('id_usuario')
     if (local != null) {
       this.factura.fk_usuario = parseInt(local);
     }
-
     if (this.porNombre.valor1 == "") {
       this.Mostrar = true;
       this.Mostrar2 = false;
@@ -104,7 +106,6 @@ export class ProductosComponent implements OnInit {
       this.Mostrar2 = true
       this.MostrarTotalProductosConcidencia();
     }
-
   }
 
   MostrarTotalProductosConcidencia() {
@@ -118,38 +119,57 @@ export class ProductosComponent implements OnInit {
   }
 
   Pedido(idproducto) {
+    // esto se puede quitar?
     var cars = <HTMLInputElement>document.getElementById('myonoffswitch');
     this.pedidoactivo = cars.checked;
+    //
+
     this.productosService.ListarProducto(idproducto).then(response => response.json()).
       then(json => this.producto = json[0])
   }
 
 
   Validarpedido(Cantidad) {
-    console.log("pedido solicitado con " + Cantidad + " de producto: " + this.producto.nombre + " id " + this.producto.idProducto)
+    //console.log("pedido solicitado con " + Cantidad + " de producto: " + this.producto.nombre + " id " + this.producto.idProducto)
     var Pod: { idProducto: Number, nombre: String, cantidad: String } = {
       idProducto: this.producto.idProducto, nombre: this.producto.nombre, cantidad: Cantidad
     }
-    this.ProductosPedido.push(Pod)
+    this.ProductosPedido.push(Pod);
+    // puede aver errores
+    this.productosService.AñadirProductos({ fkProducto: Pod.idProducto, fkPedido: this.idPedido, cantidad: Pod.cantidad }).
+      then(response => response.json()).
+      then(json => {
+        console.log(json)
+      });
+    //
   }
 
-  CerrarPedido(activado) {
+  CerrarPedido(activado, identificacion) {
     if (activado) {
       this.pedidoactivo = true;
       console.log("se abrio el pedido")
+      this.productosService.ClienteIdentificacion(identificacion).then(response => response.json()).
+        then(json => {
+          this.pedido.fkCliente = json[0].idCliente;
+          this.crearFactura();
+        });
+
     } else {
       this.pedidoactivo = false;
       console.log("se cerro el pedido")
-      this.crearFactura();
+      this.productosService.CambiarEstae(this.idPedido).then(response => response.json()).
+        then(json => {
+          console.log(json)
+          this.ProductosPedido = [];
+        })
     }
   }
 
   crearFactura() {
     this.productosService.CrearFactura(this.factura).then(response => response.json()).
       then(json => {
-        console.log(json)
-        this.pedido.fkFactura = json[0].idFactura
-        this.pedido.fkCliente = 298;
+        //console.log(json)
+        this.pedido.fkFactura = json[0].idFactura;
         this.crearPedido();
       })
   }
@@ -157,26 +177,21 @@ export class ProductosComponent implements OnInit {
   crearPedido() {
     this.productosService.CrearPedido(this.pedido).then(response => response.json()).
       then(json => {
-        console.log(json[0].idPedido + " este es el id del pedido creado")
-        for (let index = 0; index < this.ProductosPedido.length; index++) {
-          this.productosService.AñadirProductos({
-            fkProducto: this.ProductosPedido[index].idProducto, fkPedido: json[0].idPedido, cantidad: this.ProductosPedido[index].cantidad
-          }).then(response => response.json()).
-            then(json => console.log(json));
-        }
-        this.productosService.CambiarEstae(json[0].idPedido).then(response => response.json()).
-          then(json => {
-            console.log(json)
-            this.ProductosPedido= [];
-
-          })
-      })
-
+        console.log(json[0].idPedido + " este es el id del pedido creado");
+        this.idPedido = json[0].idPedido;
+      });
   }
 
   EliminarProductoPedido(index) {
     console.log("se elminara el producto")
-    this.ProductosPedido.splice(index, 1);
+    // puede aver errores
+    this.productosService.ElimarProductosPedido({ fkProducto: this.ProductosPedido[index].idProducto, fkPedido: this.idPedido }).
+      then(response => response.json()).
+      then(json => {
+        console.log(json);
+        this.ProductosPedido.splice(index, 1);
+      });
+    //
   }
 
 

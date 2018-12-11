@@ -99,7 +99,7 @@ export class AuthService {
     })
   }
 
-  AñadirProductos(producto) {
+  AñadirProductos(producto: { fkProducto: Number, fkPedido: Number, cantidad: String }) {
     console.log("dentro añadir productos")
     return fetch(this.urlbase.geturl() + "pedido/AddProductToPedido", {
       method: 'POST',
@@ -110,18 +110,44 @@ export class AuthService {
     })
   }
 
-  CambiarEstae(idPedido) {
-
-    return fetch(this.urlbase.geturl() + "pedido/ChangeStatePedido", {
+  ElimarProductosPedido(producto : { fkProducto: Number, fkPedido: Number }) {
+    return fetch(this.urlbase.geturl() + "pedido/RemoveProductoOfPedido", {
       method: 'PUT',
-      body: 'idPedido=' + idPedido + '&&state=FIN',
+      body: 'fkProducto=' + producto.fkProducto + '&&fkPedido=' + producto.fkPedido,
       headers: {
         "Content-type": "application/x-www-form-urlencoded"
       }
     })
-
   }
 
+  CambiarEstae(idPedido) {
+    return fetch(this.urlbase.geturl() + "pedido/ChangeStatePedido", {
+      method: 'PUT',
+      body: 'idPedido=' + idPedido + '&&state=COLA',
+      headers: {
+        "Content-type": "application/x-www-form-urlencoded"
+      }
+    })
+  }
 
+  CosnultarPedidosEstado(estado) {
+    return fetch(this.urlbase.geturl() + "pedido/getPedidoEstadoX/" + estado);
+  }
+
+  ConsultarPedido(idProducto) {
+    return fetch(this.urlbase.geturl() + "pedido/getOne/" + idProducto);
+  }
+
+  ConsultarDetallePedido(idProducto) {
+    return fetch(this.urlbase.geturl() + "pedido/getProductosPorPedido/" + idProducto);
+  }
+
+  ClienteIdentificacion(identificacion) {
+    return fetch(this.urlbase.geturl()+"cliente/getByIdentifi/" + identificacion);
+  }
+
+  BuscarClientes () {
+    return fetch(this.urlbase.geturl()+"cliente/All");
+  }
 
 }

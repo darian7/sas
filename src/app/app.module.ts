@@ -19,7 +19,10 @@ import { MostrarusuariosComponent } from './mostrarusuarios/mostrarusuarios.comp
 import { SearchPipe } from './search.pipe';
 import { ProductosenpedidoComponent } from './productosenpedido/productosenpedido.component';
 import { urlBase} from './activos/confi';
-import { FiltrousuariosPipe } from './tuberias/filtrousuarios.pipe'
+import { FiltrousuariosPipe } from './tuberias/filtrousuarios.pipe';
+import { ClientesComponent } from './clientes/clientes.component';
+import { ClientePipe } from './cliente.pipe';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
 
 const routes: Routes = [
@@ -28,8 +31,10 @@ const routes: Routes = [
   { path: 'pedidos', component: PedidosComponent },
   { path: 'facturas', component: FacturasComponent },
   { path: 'home', component: HomeComponent },
+  { path: 'detallepedido/:id', component: ProductosenpedidoComponent },
   { path: 'productos', component: ProductosComponent },
   { path: 'insertarproductos', component: InsertarproductosComponent },
+  { path: 'clientes', component: ClientesComponent },
   { path: 'app', component: AppComponent },
   { path: '', component: HomeComponent, pathMatch: 'full' },
   { path: '**', redirectTo: '/', pathMatch:'full'}
@@ -52,6 +57,8 @@ const routes: Routes = [
     SearchPipe,
     ProductosenpedidoComponent,
     FiltrousuariosPipe,
+    ClientesComponent,
+    ClientePipe,
     
   ],
   imports: [
@@ -59,6 +66,7 @@ const routes: Routes = [
     FormsModule,
     RouterModule.forRoot(routes),
     HttpClientModule,
+    BrowserAnimationsModule,
     
   ],
   providers: [AuthService,urlBase,],
