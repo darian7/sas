@@ -83,6 +83,7 @@ export class ProductosComponent implements OnInit {
 
   pedido: { fkFactura: Number, fkCliente: Number } = { fkFactura: null, fkCliente: null }
 
+  HayCliente =false;
 
   //Array de productos que se estan agregando al pedido actual
 
@@ -108,6 +109,15 @@ export class ProductosComponent implements OnInit {
     }
   }
 
+  ExisteCliente(fkcliente){
+    console.log(fkcliente);
+    if (fkcliente!="") {
+      this.HayCliente=true;
+    } else {
+      this.HayCliente=false;
+    }
+  }
+
   MostrarTotalProductosConcidencia() {
     this.productosService.ListarProductosTotal(this.porNombre.valor1).then(response => response.json())
       .then(json => this.productosTotal = json[0])
@@ -115,15 +125,13 @@ export class ProductosComponent implements OnInit {
 
   MostrarProductosCache() {
     this.productosService.ListarProductos().then(response => response.json())
-      .then(json => this.productos = json)
+      .then(json => this.productos = json).catch(function(error) {
+        console.log('Hubo un problema con la petición Fetch:' + error.message);
+        return confirm('No Hay Conexion a Internet');
+      });
   }
 
   Pedido(idproducto) {
-    // esto se puede quitar?
-    var cars = <HTMLInputElement>document.getElementById('myonoffswitch');
-    this.pedidoactivo = cars.checked;
-    //
-
     this.productosService.ListarProducto(idproducto).then(response => response.json()).
       then(json => this.producto = json[0])
   }

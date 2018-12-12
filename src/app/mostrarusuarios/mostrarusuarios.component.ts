@@ -30,7 +30,10 @@ export class MostrarusuariosComponent implements OnInit {
   MostrarUsuarios() {
 
     this.UsuariosService.MostrarUsuarios().then(response => response.json())
-      .then(json => this.usuarios = json)
+      .then(json => this.usuarios = json).catch(function(error) {
+        console.log('Hubo un problema con la petición Fetch:' + error.message);
+        return confirm('No Hay Conexion a Internet');
+      });
 
   }
 

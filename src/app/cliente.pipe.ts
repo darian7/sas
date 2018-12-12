@@ -28,7 +28,7 @@ export class ClientePipe implements PipeTransform {
     estado: Number,
     fkTipoCliente: Number
   }> {
-    console.log("Buscador: " + buscador);
+    
 
     return value.filter(prod => {
 
@@ -36,9 +36,6 @@ export class ClientePipe implements PipeTransform {
         return prod.identificacion.toUpperCase().indexOf(buscador.toUpperCase()) > -1;
       };
        return prod.nombre.toUpperCase().indexOf(buscador.toUpperCase()) > -1;
-
-      
-
 
     })
 

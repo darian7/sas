@@ -51,7 +51,10 @@ export class CrearusuariosComponent implements OnInit {
       this.UserDatos.experiencia = 0;
     }
 
-    this.CrearUsuariosService.CrearUsuarios(this.UserDatos)
+    this.CrearUsuariosService.CrearUsuarios(this.UserDatos).catch(function(error) {
+      console.log('Hubo un problema con la petición Fetch:' + error.message);
+      return confirm('No Hay Conexion a Internet');
+    });
 
   }
 

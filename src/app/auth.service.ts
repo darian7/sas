@@ -24,7 +24,7 @@ export class AuthService {
 
   CrearUsuarios(userdatos) {
 
-    fetch(this.urlbase.geturl() + "persons/create", {
+    return fetch(this.urlbase.geturl() + "persons/create", {
       method: 'POST',
       body: 'nombre=' + userdatos.nombre + '&&apellido=' + userdatos.apellido + '&&genero=' + userdatos.genero + '&&fe_naci=' + userdatos.nacimiento + '&&identifi=' +
         userdatos.identificacion + '&&estado=1',
@@ -48,7 +48,7 @@ export class AuthService {
   }
 
   CrearProductos(producto) {
-    fetch(this.urlbase.geturl() + "products/create", {
+    return fetch(this.urlbase.geturl() + "products/create", {
       method: 'POST',
       body: 'nombre=' + producto.nombre + '&&referencia=' + producto.referencia + '&&iva=' + producto.iva +
         '&&existencia=' + producto.existencia +

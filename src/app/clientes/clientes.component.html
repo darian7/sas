@@ -2,11 +2,9 @@
   <div class="col-md-6">
       <input [(ngModel)]="buscador" type="text">
   </div>
-  
 </div>
 
 <div class="row">
-
   <div *ngFor="let cliente of clientes | clienteFiltro : buscador" class="col-md-3">
     <br>
     <label>Nombre: {{cliente.nombre}}</label>
@@ -17,5 +15,4 @@
     <br>
     <br>
   </div>
-
 </div>

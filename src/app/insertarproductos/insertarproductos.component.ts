@@ -19,7 +19,7 @@ export class InsertarproductosComponent implements OnInit {
     detalle:String,
     imagen:String
   } = {
-    nombre :"",
+    nombre :null,
     referencia: "",
     comentario:"",
     precio:null,
@@ -50,7 +50,10 @@ export class InsertarproductosComponent implements OnInit {
       this.producto.iva=0;
     }
 
-    this.CrearproductoService.CrearProductos(this.producto)
+    this.CrearproductoService.CrearProductos(this.producto).catch(function(error) {
+      console.log('Hubo un problema con la petición Fetch:' + error.message);
+      return confirm('No Hay Conexion a Internet');
+    });
 
   }
 

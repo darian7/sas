@@ -22,7 +22,8 @@ import { urlBase} from './activos/confi';
 import { FiltrousuariosPipe } from './tuberias/filtrousuarios.pipe';
 import { ClientesComponent } from './clientes/clientes.component';
 import { ClientePipe } from './cliente.pipe';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 
 const routes: Routes = [
@@ -59,7 +60,6 @@ const routes: Routes = [
     FiltrousuariosPipe,
     ClientesComponent,
     ClientePipe,
-    
   ],
   imports: [
     BrowserModule,
@@ -67,7 +67,6 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     HttpClientModule,
     BrowserAnimationsModule,
-    
   ],
   providers: [AuthService,urlBase,],
   bootstrap: [AppComponent]

@@ -41,6 +41,9 @@ export class PedidosComponent implements OnInit {
       then(response => response.json())
       .then(json => {
         this.PedidosCola= json;
+      }).catch(function(error) {
+        console.log('Hubo un problema con la petición Fetch:' + error.message);
+        return confirm('No Hay Conexion a Internet');
       });
   }
 
@@ -49,6 +52,9 @@ export class PedidosComponent implements OnInit {
       then(response => response.json())
       .then(json => {
         this.PedidosAtendido= json;
+      }).catch(function(error) {
+        console.log('Hubo un problema con la petición Fetch:' + error.message);
+        return confirm('No Hay Conexion a Internet');
       });
   }
 

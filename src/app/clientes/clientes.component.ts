@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service'
+
 @Component({
   selector: 'app-clientes',
   templateUrl: './clientes.component.html',
-  styleUrls: ['./clientes.component.css']
+  styleUrls: ['./clientes.component.css'],
 })
 export class ClientesComponent implements OnInit {
 
@@ -29,11 +30,15 @@ export class ClientesComponent implements OnInit {
     this.ConsultarClientes();
   }
 
+
   ConsultarClientes () {
     this.Servicio.BuscarClientes().then(response => response.json()).
     then(json => {
       this.clientes = json;
-    })
+    }).catch(function(error) {
+      console.log('Hubo un problema con la petición Fetch:' + error.message);
+      return confirm('No Hay Conexion a Internet');
+    });
   }
 
 }

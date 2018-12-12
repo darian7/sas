@@ -53,6 +53,9 @@ export class AppComponent implements OnInit {
 
         }
 
-      })
+      }).catch(function(error) {
+        console.log('Hubo un problema con la petición Fetch:' + error.message);
+        return confirm('No Hay Conexion a Internet');
+      });
   }
 }
