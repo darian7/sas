@@ -65,8 +65,8 @@ const routes: Routes = [
     BrowserModule,
     FormsModule,
     RouterModule.forRoot(routes),
-    HttpClientModule,
     BrowserAnimationsModule,
+    HttpClientModule,
   ],
   providers: [AuthService,urlBase,],
   bootstrap: [AppComponent]

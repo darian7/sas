@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/auth.service';
 
 @Component({
@@ -83,7 +83,7 @@ export class ProductosComponent implements OnInit {
 
   pedido: { fkFactura: Number, fkCliente: Number } = { fkFactura: null, fkCliente: null }
 
-  HayCliente =false;
+  HayCliente = false;
 
   //Array de productos que se estan agregando al pedido actual
 
@@ -92,6 +92,10 @@ export class ProductosComponent implements OnInit {
   //Id el pedido que se encuentra en marcha
 
   idPedido: Number = null;
+
+  NombreCliente: String = null;
+
+  ArregloExistencia: Array<Number> = [];
 
   ngOnInit() {
     var local = localStorage.getItem('id_usuario')
@@ -109,14 +113,6 @@ export class ProductosComponent implements OnInit {
     }
   }
 
-  ExisteCliente(fkcliente){
-    console.log(fkcliente);
-    if (fkcliente!="") {
-      this.HayCliente=true;
-    } else {
-      this.HayCliente=false;
-    }
-  }
 
   MostrarTotalProductosConcidencia() {
     this.productosService.ListarProductosTotal(this.porNombre.valor1).then(response => response.json())
@@ -125,7 +121,7 @@ export class ProductosComponent implements OnInit {
 
   MostrarProductosCache() {
     this.productosService.ListarProductos().then(response => response.json())
-      .then(json => this.productos = json).catch(function(error) {
+      .then(json => this.productos = json).catch(function (error) {
         console.log('Hubo un problema con la petición Fetch:' + error.message);
         return confirm('No Hay Conexion a Internet');
       });
@@ -133,35 +129,39 @@ export class ProductosComponent implements OnInit {
 
   Pedido(idproducto) {
     this.productosService.ListarProducto(idproducto).then(response => response.json()).
-      then(json => this.producto = json[0])
-  }
-
-
-  Validarpedido(Cantidad) {
-    //console.log("pedido solicitado con " + Cantidad + " de producto: " + this.producto.nombre + " id " + this.producto.idProducto)
-    var Pod: { idProducto: Number, nombre: String, cantidad: String } = {
-      idProducto: this.producto.idProducto, nombre: this.producto.nombre, cantidad: Cantidad
-    }
-    this.ProductosPedido.push(Pod);
-    // puede aver errores
-    this.productosService.AñadirProductos({ fkProducto: Pod.idProducto, fkPedido: this.idPedido, cantidad: Pod.cantidad }).
-      then(response => response.json()).
       then(json => {
-        console.log(json)
-      });
-    //
+        this.ArregloExistencia = [];
+        for (let index = 1; index <= json[0].existencia; index++) {
+          this.ArregloExistencia.push(index);
+        }
+        this.producto = json[0]
+
+      })
   }
 
-  CerrarPedido(activado, identificacion) {
+  ExisteCliente(fkcliente) {
+    console.log(fkcliente);
+    if (fkcliente != "") {
+      this.productosService.ClienteIdentificacion(fkcliente).then(response => response.json()).
+        then(json => {
+          if (json.length >= 1) {
+            //console.log(json);   
+            this.NombreCliente = json[0].nombre;
+            this.pedido.fkCliente = json[0].idCliente;
+            console.log(this.pedido.fkCliente+"este es el id del cliente encontrado")
+            this.HayCliente = true;
+          } else {
+            this.HayCliente = false;
+          }
+        })
+    };
+  }
+
+  CerrarPedido(activado) {
     if (activado) {
       this.pedidoactivo = true;
       console.log("se abrio el pedido")
-      this.productosService.ClienteIdentificacion(identificacion).then(response => response.json()).
-        then(json => {
-          this.pedido.fkCliente = json[0].idCliente;
-          this.crearFactura();
-        });
-
+      this.crearFactura();
     } else {
       this.pedidoactivo = false;
       console.log("se cerro el pedido")
@@ -183,11 +183,31 @@ export class ProductosComponent implements OnInit {
   }
 
   crearPedido() {
+    console.log(this.pedido.fkCliente+" este es el id del cliente con el que se crea el pedido")
     this.productosService.CrearPedido(this.pedido).then(response => response.json()).
       then(json => {
         console.log(json[0].idPedido + " este es el id del pedido creado");
         this.idPedido = json[0].idPedido;
       });
+  }
+
+  Validarpedido(Cantidad) {
+    //console.log("pedido solicitado con " + Cantidad + " de producto: " + this.producto.nombre + " id " + this.producto.idProducto)
+
+    if (Cantidad >= 1) {
+      var Pod: { idProducto: Number, nombre: String, cantidad: String } = {
+        idProducto: this.producto.idProducto, nombre: this.producto.nombre, cantidad: Cantidad
+      }
+      this.ProductosPedido.push(Pod);
+      // puede aver errores
+      this.productosService.AñadirProductos({ fkProducto: Pod.idProducto, fkPedido: this.idPedido, cantidad: Pod.cantidad }).
+        then(response => response.json()).
+        then(json => {
+          console.log(json)
+        });
+      //
+    }
+
   }
 
   EliminarProductoPedido(index) {
@@ -201,6 +221,5 @@ export class ProductosComponent implements OnInit {
       });
     //
   }
-
 
 }

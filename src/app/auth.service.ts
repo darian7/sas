@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { urlBase } from './activos/confi';
+import { Observable } from 'rxjs';
+import { faceCliente, facePedido } from './pedidos/pedido'
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +34,7 @@ export class AuthService {
         "Content-type": "application/x-www-form-urlencoded"
       }
     })
-
+    //corregir
     fetch(this.urlbase.geturl() + "users/create", {
       method: 'POST',
       body: 'nombre=' + userdatos.nombre + ' ' + userdatos.apellido + '&&contrasena=' + userdatos.contrasena + '&&correo=' + userdatos.correo + '&&comentario=' +
@@ -74,8 +76,6 @@ export class AuthService {
   ListarProductosTotal(consulta: String) {
     return fetch(this.urlbase.geturl() + "products/queryProduct/" + consulta)
   }
-  ListarPedidos() {
-  }
 
   CrearFactura(factura) {
     return fetch(this.urlbase.geturl() + "factura/create", {
@@ -87,7 +87,6 @@ export class AuthService {
       }
     })
   }
-
 
   CrearPedido(pedido) {
     return fetch(this.urlbase.geturl() + "pedido/create", {
@@ -110,7 +109,7 @@ export class AuthService {
     })
   }
 
-  ElimarProductosPedido(producto : { fkProducto: Number, fkPedido: Number }) {
+  ElimarProductosPedido(producto: { fkProducto: Number, fkPedido: Number }) {
     return fetch(this.urlbase.geturl() + "pedido/RemoveProductoOfPedido", {
       method: 'PUT',
       body: 'fkProducto=' + producto.fkProducto + '&&fkPedido=' + producto.fkPedido,
@@ -130,10 +129,6 @@ export class AuthService {
     })
   }
 
-  CosnultarPedidosEstado(estado) {
-    return fetch(this.urlbase.geturl() + "pedido/getPedidoEstadoX/" + estado);
-  }
-
   ConsultarPedido(idProducto) {
     return fetch(this.urlbase.geturl() + "pedido/getOne/" + idProducto);
   }
@@ -143,11 +138,27 @@ export class AuthService {
   }
 
   ClienteIdentificacion(identificacion) {
-    return fetch(this.urlbase.geturl()+"cliente/getByIdentifi/" + identificacion);
+    return fetch(this.urlbase.geturl() + "cliente/getByIdentifi/" + identificacion);
   }
 
-  BuscarClientes () {
-    return fetch(this.urlbase.geturl()+"cliente/All");
+  BuscarClientes() {
+    return fetch(this.urlbase.geturl() + "cliente/All");
   }
 
+  ClienteID(id: Number): Observable<Array<faceCliente>> {
+    return this.http.get<Array<faceCliente>>(this.urlbase.geturl() + "cliente/getOne/" + id);
+  }
+
+  ClienteID2(id: Number): Observable<Array<faceCliente>> {
+    return this.http.get<Array<faceCliente>>(this.urlbase.geturl() + "cliente/getOne/" + id);
+  }
+
+  CosnultarPedidoEstado(estado): Observable<Array<facePedido>> {
+
+    return this.http.get<Array<facePedido>>(this.urlbase.geturl() +  "pedido/getPedidoEstadoX/" + estado);
+  }
+
+  CosnultarPedidoEstado2(estado): Observable<Array<facePedido>> {
+    return this.http.get<Array<facePedido>>(this.urlbase.geturl() +  "pedido/getPedidoEstadoX/" + estado);
+  }
 }
