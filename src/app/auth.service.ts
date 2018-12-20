@@ -145,17 +145,8 @@ export class AuthService {
     return fetch(this.urlbase.geturl() + "cliente/All");
   }
 
-  ClienteID(id: Number): Observable<Array<faceCliente>> {
-    return this.http.get<Array<faceCliente>>(this.urlbase.geturl() + "cliente/getOne/" + id);
-  }
-
   ClienteID2(id: Number): Observable<Array<faceCliente>> {
     return this.http.get<Array<faceCliente>>(this.urlbase.geturl() + "cliente/getOne/" + id);
-  }
-
-  CosnultarPedidoEstado(estado): Observable<Array<facePedido>> {
-
-    return this.http.get<Array<facePedido>>(this.urlbase.geturl() +  "pedido/getPedidoEstadoX/" + estado);
   }
 
   CosnultarPedidoEstado2(estado): Observable<Array<facePedido>> {

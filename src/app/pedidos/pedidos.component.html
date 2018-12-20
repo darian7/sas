@@ -1,24 +1,26 @@
 <div>
 
+    <button (click)="ver()" >ver</button>
+
     <div class="row">
 
         <div class="col-md-3 border">
 
             <div class="row">
 
-                <div *ngFor="let pedidosa of PedidosClientesAtendido; index as i" class="col-md-12">
+                <div *ngFor="let pedidosa of PedidosAtendido" class="col-md-12">
                     <br>
-                    <label> Cliente: {{pedidosa[1].nombre}} </label>
+                    <label> Cliente: {{pedidosa.nombre}} </label>
                     <br>
-                    <label> Fecha : {{pedidosa[0].fecha}}</label>
+                    <label> Fecha : {{pedidosa.fecha}}</label>
                     <br>
-                    <label> Estado: {{pedidosa[0].estado}}</label>
+                    <label> Estado: {{pedidosa.estado}}</label>
                     <br>
-                    <label> Cliente: {{pedidosa[0].fkCliente}}</label>
+                    <label> Cliente: {{pedidosa.fkCliente}}</label>
                     <br>
-                    <label> Factura: {{pedidosa[0].fkFactura}}</label>
+                    <label> Factura: {{pedidosa.fkFactura}}</label>
                     <br>
-                    <a [routerLink]="['/detallepedido',pedidosa[0].idPedido]">detalles</a>
+                    <a [routerLink]="['/detallepedido',pedidosa.idPedido]">detalles</a>
                     <br>
                     <br>
                 </div>
@@ -30,21 +32,21 @@
 
         <div class="col-md-9  border">
             <div class="row">
-                <div *ngFor="let pedidosc of PedidosClientesCola;let cliente=index" class="col-md-4">
+                <div *ngFor="let pedidosc of PedidosCola" class="col-md-4">
                     <br>
-                    <label> Id Pedido: {{pedidosc[0].idPedido}}</label>
+                    <label> Id Pedido: {{pedidosc.idPedido}}</label>
                     <br>
-                    <label> Cliente: {{pedidosc[1].nombre}} </label>
+                    <label> Cliente: {{pedidosc.nombre}} </label>
                     <br>
-                    <label> Fecha : {{pedidosc[0].fecha}}</label>
+                    <label> Fecha : {{pedidosc.fecha}}</label>
                     <br>
-                    <label> Estado: {{pedidosc[0].estado}}</label>
+                    <label> Estado: {{pedidosc.estado}}</label>
                     <br>
-                    <label> Cliente: {{pedidosc[0].fkCliente}}</label>
+                    <label> Cliente: {{pedidosc.fkCliente}}</label>
                     <br>
-                    <label> Factura: {{pedidosc[0].fkFactura}}</label>
+                    <label> Factura: {{pedidosc.fkFactura}}</label>
                     <br>
-                    <a [routerLink]="['/detallepedido',pedidosc[0].idPedido]">detalles</a>
+                    <a [routerLink]="['/detallepedido',pedidosc.idPedido]">detalles</a>
                     <br>
                     <br>
                 </div>

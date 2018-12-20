@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service'
-import { Observable, Subscriber, of } from 'rxjs';
+import { Observable, Subscriber, of, throwError } from 'rxjs';
 import { faceCliente, facePedido } from './pedido'
-import { map, switchMap, concatMap, flatMap, tap, retry, subscribeOn, timeout, catchError } from 'rxjs/operators';
+import { map, switchMap, concatMap, flatMap, tap, retry, subscribeOn, timeout, catchError, mergeMap } from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 
@@ -13,12 +14,12 @@ import { map, switchMap, concatMap, flatMap, tap, retry, subscribeOn, timeout, c
 })
 export class PedidosComponent implements OnInit {
 
-  constructor(private Servicio: AuthService) { }
+  constructor(private Servicio: AuthService) {
 
-  PedidosClientesCola: Array<[facePedido, faceCliente]> = [];
+  }
+
   PedidosCola: Array<facePedido> = [];
 
-  PedidosClientesAtendido: Array<[facePedido, faceCliente]> = [];
   PedidosAtendido: Array<facePedido> = [];
 
   i = 0;
@@ -29,55 +30,81 @@ export class PedidosComponent implements OnInit {
     this.ConsultarPedidoCola2();
   }
 
+  ver() {
+    console.log(this.PedidosCola)
+  }
+
   ConsultarPedidosAtendido2() {
 
-    this.Servicio.CosnultarPedidoEstado("ATENDIDO").subscribe(pedidos => {
-      this.PedidosAtendido = pedidos;
-    }).add(() => {
+    this.Servicio.CosnultarPedidoEstado2("Atendido").pipe(
 
-      this.Servicio.CosnultarPedidoEstado("ATENDIDO").pipe(
-
-        flatMap(x => x),
-        concatMap(pedido => this.Servicio.ClienteID(pedido.fkCliente))
-
-
-      ).subscribe(clientes => {
-
-        this.PedidosClientesAtendido = [...this.PedidosClientesAtendido, [this.PedidosAtendido[this.i], clientes[0]]]
-        this.i2++
-
-      }).add(() => {
-        console.log("Termino 1");
-       // this.ConsultarPedidoCola2();
+      tap(pedidos => {
+        this.PedidosAtendido = pedidos
+      }),
+      flatMap(x => x),
+      mergeMap(pedido => this.Servicio.ClienteID2(pedido.fkCliente).pipe(
+        map((cliente) => {
+          return {
+            ...pedido,
+            nombre: cliente[0].nombre
+          }
+        })
+      )),
+      retry(4),
+      catchError(error => {
+        return throwError("Error al consultar pedios en cola : " + error);
       })
 
+    ).subscribe(pedidosnew => {
+
+      this.PedidosAtendido = this.PedidosAtendido.map((curren) => {
+
+        if (curren.idPedido !== pedidosnew.idPedido) {
+          return curren;
+        } else {
+          return pedidosnew;
+        }
+      });
+
     });
+
 
   }
 
   ConsultarPedidoCola2() {
 
-    this.Servicio.CosnultarPedidoEstado2("COLA").subscribe(pedidos => {
-      this.PedidosCola = pedidos;
-    }).add(() => {
+    this.Servicio.CosnultarPedidoEstado2("COLA").pipe(
 
-      this.Servicio.CosnultarPedidoEstado2("COLA").pipe(
-
-        flatMap(x => x),
-        concatMap(pedido => this.Servicio.ClienteID2(pedido.fkCliente))
-
-      ).subscribe(clientes => {
-
-        this.PedidosClientesCola = [...this.PedidosClientesCola, [this.PedidosCola[this.i], clientes[0]]]
-        this.i++
-
-      }).add(() => {
-        console.log("Termino2")
-        
+      tap(pedidos => {
+        this.PedidosCola = pedidos
+        // console.log(this.PedidosCola)
+      }),
+      flatMap(x => x),
+      mergeMap(pedido => this.Servicio.ClienteID2(pedido.fkCliente).pipe(
+        map((cliente) => {
+          return {
+            ...pedido,
+            nombre: cliente[0].nombre
+          }
+        })
+      )),
+      retry(4),
+      catchError(error => {
+        return throwError("Error al consultar pedios en cola : " + error);
       })
 
-    })
+    ).subscribe(pedidosnew => {
 
+      this.PedidosCola = this.PedidosCola.map((curren) => {
+
+        if (curren.idPedido !== pedidosnew.idPedido) {
+          return curren;
+        } else {
+          return pedidosnew;
+        }
+      });
+
+    });
 
   }
 
