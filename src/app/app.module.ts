@@ -23,6 +23,7 @@ import { FiltrousuariosPipe } from './tuberias/filtrousuarios.pipe';
 import { ClientesComponent } from './clientes/clientes.component';
 import { ClientePipe } from './cliente.pipe';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CrearclienteComponent } from './crearcliente/crearcliente.component';
 
 
 
@@ -36,6 +37,7 @@ const routes: Routes = [
   { path: 'productos', component: ProductosComponent },
   { path: 'insertarproductos', component: InsertarproductosComponent },
   { path: 'clientes', component: ClientesComponent },
+  { path: 'createclientes', component: CrearclienteComponent},
   { path: 'app', component: AppComponent },
   { path: '', component: HomeComponent, pathMatch: 'full' },
   { path: '**', redirectTo: '/', pathMatch:'full'}
@@ -60,6 +62,7 @@ const routes: Routes = [
     FiltrousuariosPipe,
     ClientesComponent,
     ClientePipe,
+    CrearclienteComponent,
   ],
   imports: [
     BrowserModule,

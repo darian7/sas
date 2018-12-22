@@ -26,15 +26,18 @@ export class AuthService {
 
   CrearUsuarios(userdatos) {
 
-    return fetch(this.urlbase.geturl() + "persons/create", {
+    fetch(this.urlbase.geturl() + "persons/create", {
       method: 'POST',
       body: 'nombre=' + userdatos.nombre + '&&apellido=' + userdatos.apellido + '&&genero=' + userdatos.genero + '&&fe_naci=' + userdatos.nacimiento + '&&identifi=' +
         userdatos.identificacion + '&&estado=1',
       headers: {
         "Content-type": "application/x-www-form-urlencoded"
       }
-    })
-    //corregir
+    }).catch(function (error) {
+      console.log('Hubo un problema con la petición Fetch:' + error.message);
+      return confirm('No Hay Conexion a Internet');
+    });
+
     fetch(this.urlbase.geturl() + "users/create", {
       method: 'POST',
       body: 'nombre=' + userdatos.nombre + ' ' + userdatos.apellido + '&&contrasena=' + userdatos.contrasena + '&&correo=' + userdatos.correo + '&&comentario=' +
@@ -150,6 +153,16 @@ export class AuthService {
   }
 
   CosnultarPedidoEstado2(estado): Observable<Array<facePedido>> {
-    return this.http.get<Array<facePedido>>(this.urlbase.geturl() +  "pedido/getPedidoEstadoX/" + estado);
+    return this.http.get<Array<facePedido>>(this.urlbase.geturl() + "pedido/getPedidoEstadoX/" + estado);
+  }
+
+  CreateClient(cliente) {
+    const httpPostOptions = {
+      headers: new HttpHeaders({
+        "Content-Type": "application/json"
+      }),
+    };
+    return this.http.post(this.urlbase.geturl() + "cliente/create", cliente, httpPostOptions)
   }
 }
+

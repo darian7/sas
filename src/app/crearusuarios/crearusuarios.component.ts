@@ -10,27 +10,29 @@ import { isNullOrUndefined } from 'util';
 })
 export class CrearusuariosComponent implements OnInit {
 
-  UserDatos: { 
-    nombre: String, 
-    apellido: String, 
-    correo: String, 
-    contrasena: String, 
-    experiencia: Number, 
-    comentario: String, 
-    identificacion: String, 
-    genero: Number, 
-    nacimiento: String 
-    } = {
-    nombre: "",
-    apellido: "",
-    correo: "",
-    contrasena: "",
-    experiencia: null,
-    comentario: "",
-    identificacion: "",
-    genero: null,
-    nacimiento: ""
-  };
+  UserDatos: {
+    nombre: String,
+    apellido: String,
+    correo: String,
+    contrasena: String,
+    experiencia: String,
+    comentario: String,
+    identificacion: String,
+    genero: String,
+    nacimiento: String
+  } = {
+      nombre: "",
+      apellido: "",
+      correo: "",
+      contrasena: "",
+      experiencia: "",
+      comentario: "",
+      identificacion: "",
+      genero: "",
+      nacimiento: ""
+    };
+
+  lleno = true;
 
   constructor(private CrearUsuariosService: AuthService) { }
 
@@ -43,19 +45,24 @@ export class CrearusuariosComponent implements OnInit {
       this.UserDatos.apellido = "Sin apellido";
     } if (this.UserDatos.nacimiento == "") {
       this.UserDatos.nacimiento = "1993-01-13";
-    } if (this.UserDatos.correo == "") {
-      this.UserDatos.correo = "Sin correo";
     } if (this.UserDatos.comentario == "") {
       this.UserDatos.comentario = "Sin comentario";
-    } if (this.UserDatos.experiencia == null) {
-      this.UserDatos.experiencia = 0;
+    } if (this.UserDatos.experiencia == "") {
+      this.UserDatos.experiencia = "0";
+    } if (this.UserDatos.identificacion == "") {
+      this.UserDatos.identificacion = "Sin identificacion";
     }
 
-    this.CrearUsuariosService.CrearUsuarios(this.UserDatos).catch(function(error) {
-      console.log('Hubo un problema con la petición Fetch:' + error.message);
-      return confirm('No Hay Conexion a Internet');
-    });
+    this.CrearUsuariosService.CrearUsuarios(this.UserDatos)
 
+  }
+
+  Verificar() {
+    if (this.UserDatos.nombre !== "" && this.UserDatos.correo !== "" && this.UserDatos.contrasena !== "" && this.UserDatos.genero !== null) {
+      this.lleno = false;
+    } else {
+      this.lleno = true;
+    }
   }
 
 }
