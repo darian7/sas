@@ -11,11 +11,11 @@
         <div class="col-md-8 order-md-1">
             <h4 class="mb-3">Datos del Usuario</h4>
 
-            <form onsubmit="this.reset()" class="form">
+            <form  onsubmit="this.reset()" class="form">
                 <div class="row">
                     <div class="col-md-6 mb-3 form-group">
                         <label>Nombres</label>
-                        <input [(ngModel)]="UserDatos.nombre" type="text" class="form-control" name="nombre"
+                        <input (keyup)="Verificar()" [(ngModel)]="UserDatos.nombre" type="text" class="form-control" name="nombre"
                             placeholder="" value="" required="">
                     </div>
                     <div class="col-md-6 mb-3 form-group">
@@ -33,15 +33,15 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">@</span>
                             </div>
-                            <input [(ngModel)]="UserDatos.correo" type="text" class="form-control" name="correoUsuario"
+                            <input (keyup)="Verificar()" [(ngModel)]="UserDatos.correo" type="text" class="form-control" name="correoUsuario"
                                 placeholder="ejemplo@gmail.com" required="">
                         </div>
                     </div>
 
                     <div class="col-md-6  form-group">
 
-                        <label for="">Contraseña</label>
-                        <input [(ngModel)]="UserDatos.contrasena" type="password" class="form-control" name="contraseña"
+                        <label  for="">Contraseña</label>
+                        <input (keyup)="Verificar()" [(ngModel)]="UserDatos.contrasena" type="password" class="form-control" name="contraseña"
                             placeholder=". . . .">
                     </div>
 
@@ -89,8 +89,7 @@
 
                     <div class="col-md-3 mb-3 form-group">
                         <label for="">Genero</label>
-                        <select [(ngModel)]="UserDatos.genero" name="genero" class="form-control">
-                            <option value="" disabled selected>Seleccionar</option>
+                        <select (click)="Verificar()" [(ngModel)]="UserDatos.genero" name="genero" class="form-control">
                             <option value="0">Masculino</option>
                             <option value="1">Femenino</option>
                         </select>
@@ -98,7 +97,7 @@
 
                     <div class="col-md-4 mb-3 form-group">
                         <label for="">Fecha de nacimiento</label>
-                        <input [(ngModel)]="UserDatos.nacimiento" type="date" class="form-control" name="nacimiento" step="1" value="2018-10-14">
+                        <input [(ngModel)]="UserDatos.nacimiento" type="date" class="form-control" name="nacimiento" step="1" >
                     </div>
 
                 </div>
@@ -106,14 +105,11 @@
 
                 <hr class="mb-4">
                 <hr class="mb-4">
-                <button (click)=" CrearUsuarios()" class="btn btn-primary btn-lg btn-block" type="submit">Guardar
+                <button [disabled]="lleno" (click)=" CrearUsuarios()" class="btn btn-primary btn-lg btn-block" type="submit">Guardar
                     Usuario</button>
             </form>
         </div>
 
     </div>
 
-    <footer class="my-5 pt-5 text-muted text-center text-small">
-        <p class="mb-1">© 2018-2019 Company Sofia</p>
-    </footer>
 </div>

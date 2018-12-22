@@ -16,7 +16,7 @@
 
                     <div class="col-md-6 mb-3 form-group">
                         <label for="nombreproducto">Nombre del Producto</label>
-                        <input [(ngModel)]="producto.nombre" type="text" class="form-control" name="nombreproducto"
+                        <input (keyup)="Validar()" [(ngModel)]="producto.nombre" type="text" class="form-control" name="nombreproducto"
                             placeholder="Ejemplo: Acetaminofen" value="" required="">
                     </div>
 
@@ -42,7 +42,7 @@
 
                             <div class="col-md-6 mb-3 form-group">
                                 <label for="precioproducto">Precio Unitario $</label>
-                                <input [(ngModel)]="producto.precio" type="text" class="form-control" name="precioproducto"
+                                <input (keyup)="Validar()" [(ngModel)]="producto.precio" type="text" class="form-control" name="precioproducto"
                                     placeholder="Ejemplo: 2000" value="" required="">
                             </div>
 
@@ -94,7 +94,7 @@
                 </div>
 
                 <hr class="mb-3">
-                <button (click)="CrearProductos()" class="btn btn-primary btn-lg btn-block" type="submit">Guardar
+                <button [disabled]="lleno" (click)="CrearProductos()" class="btn btn-primary btn-lg btn-block" type="submit">Guardar
                     Producto</button>
             </form>
         </div>

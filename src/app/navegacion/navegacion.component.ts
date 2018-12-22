@@ -12,4 +12,9 @@ export class NavegacionComponent implements OnInit {
   ngOnInit() {
   }
 
+  CerrarSesion(){
+    localStorage.removeItem('id_usuario')
+    localStorage.removeItem('logeado')
+  }
+
 }

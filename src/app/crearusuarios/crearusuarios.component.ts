@@ -10,19 +10,29 @@ import { isNullOrUndefined } from 'util';
 })
 export class CrearusuariosComponent implements OnInit {
 
-  UserDatos = {
+  UserDatos: {
+    nombre: String,
+    apellido: String,
+    correo: String,
+    contrasena: String,
+    experiencia: String,
+    comentario: String,
+    identificacion: String,
+    genero: String,
+    nacimiento: String
+  } = {
+      nombre: "",
+      apellido: "",
+      correo: "",
+      contrasena: "",
+      experiencia: "",
+      comentario: "",
+      identificacion: "",
+      genero: "",
+      nacimiento: ""
+    };
 
-    nombre: "",
-    apellido: "",
-    correo: "",
-    contrasena: "",
-    experiencia: null,
-    comentario: "",
-    identificacion: null,
-    genero: null,
-    nacimiento: "",
-
-  }
+  lleno = true;
 
   constructor(private CrearUsuariosService: AuthService) { }
 
@@ -35,16 +45,24 @@ export class CrearusuariosComponent implements OnInit {
       this.UserDatos.apellido = "Sin apellido";
     } if (this.UserDatos.nacimiento == "") {
       this.UserDatos.nacimiento = "1993-01-13";
-    } if (this.UserDatos.correo == "") {
-      this.UserDatos.correo = "Sin correo";
     } if (this.UserDatos.comentario == "") {
       this.UserDatos.comentario = "Sin comentario";
-    } if (this.UserDatos.experiencia == null) {
-      this.UserDatos.experiencia = 0;
+    } if (this.UserDatos.experiencia == "") {
+      this.UserDatos.experiencia = "0";
+    } if (this.UserDatos.identificacion == "") {
+      this.UserDatos.identificacion = "Sin identificacion";
     }
 
     this.CrearUsuariosService.CrearUsuarios(this.UserDatos)
 
+  }
+
+  Verificar() {
+    if (this.UserDatos.nombre !== "" && this.UserDatos.correo !== "" && this.UserDatos.contrasena !== "" && this.UserDatos.genero !== null) {
+      this.lleno = false;
+    } else {
+      this.lleno = true;
+    }
   }
 
 }
